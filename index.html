@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Happy Birthday, Rian!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg: #a259c4; /* purple background you liked */
+      --paper: rgba(255,255,255,0.96);
+      --accent: #6f2fa0;
+      --text: #2b1b2b;
+      --card-width: 760px;
+    }
+    html,body{height:100%;}
+    body{
+      margin:0;
+      min-height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background: linear-gradient(180deg, var(--bg), #8d47b8 60%);
+      font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:40px;
+      box-sizing:border-box;
+    }
+
+    .scene{
+      width:100%;
+      max-width:1100px;
+      display:flex;
+      gap:32px;
+      align-items:center;
+      justify-content:center;
+      flex-wrap:wrap;
+    }
+
+    .card{
+      width:100%;
+      max-width:var(--card-width);
+      background:var(--paper);
+      border-radius:14px;
+      padding:36px 44px;
+      box-shadow: 0 12px 40px rgba(15,8,25,0.35), inset 0 1px 0 rgba(255,255,255,0.6);
+      position:relative;
+      border:1px solid rgba(0,0,0,0.05);
+    }
+
+    .header{
+      display:flex;
+      align-items:center;
+      gap:16px;
+      margin-bottom:18px;
+    }
+    .balloon{
+      width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#ffd6f0,#eaa8ff);display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 6px 18px rgba(0,0,0,0.12);
+    }
+    h1{margin:0;font-size:20px;font-weight:600;color:var(--accent);}
+    p.sub{margin:0;font-size:13px;color:#5b3b67;}
+
+    .letter{
+      margin-top:18px;
+      font-family:'Patrick Hand', 'Poppins', sans-serif;
+      font-size:20px;
+      line-height:1.6;
+      color:var(--text);
+      min-height:320px;
+      white-space:pre-wrap;
+      overflow:hidden;
+      position:relative;
+    }
+
+    /* typed text container */
+    .typed{display:block}
+
+    /* caret */
+    .caret{
+      display:inline-block;
+      width:10px;
+      height:26px;
+      margin-left:4px;
+      background:var(--accent);
+      vertical-align:bottom;
+      border-radius:3px;
+      opacity:1;
+      animation:blink 1s steps(1) infinite;
+      transform-origin:center bottom;
+    }
+    @keyframes blink{
+      0%,49%{opacity:1}
+      50%,100%{opacity:0}
+    }
+
+    /* small note */
+    .note{margin-top:20px;font-size:13px;color:#4a2f58}
+
+    /* controls */
+    .controls{display:flex;gap:8px;align-items:center;margin-top:18px}
+    .btn{background:var(--accent);color:white;padding:10px 14px;border-radius:10px;border:none;font-weight:600;cursor:pointer;box-shadow:0 8px 18px rgba(111,47,160,0.18)}
+    .btn.ghost{background:transparent;border:1px solid rgba(111,47,160,0.18);color:white}
+
+    /* small responsive tweaks */
+    @media (max-width:800px){
+      .card{padding:24px;}
+      .letter{font-size:18px;min-height:240px}
+      .balloon{width:54px;height:54px}
+    }
+  </style>
+</head>
+<body>
+  <div class="scene">
+    <div class="card" role="main">
+      <div class="header">
+        <div class="balloon">🎈</div>
+        <div>
+          <h1>Happy Birthday, Rian!</h1>
+          <p class="sub">A little letter, typed just for you 💜</p>
+        </div>
+      </div>
+
+      <div class="letter" aria-live="polite">
+        <span id="typed" class="typed"></span><span class="caret" id="caret"></span>
+      </div>
+
+      <div class="controls">
+        <button class="btn" id="restart">Replay</button>
+        <button class="btn" id="skip">Show All</button>
+        <div style="flex:1"></div>
+        <div class="note">Tip: click <strong>Replay</strong> to type again.</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // The exact letter text you gave, preserved (including typos and punctuation)
+    const letter = `Happy Birthday, Rian! 🎉💜
+Grabe oh, can you believ it? Ten-ager kana HAHAHAHA
+Thank you for being the best sibling ever, kahit na 'di ako naging mabuting kuya sa'yo. 
+You're the sweetest sister i could ever wish for. 
+Kahit na palagi kitang inaaway, please do know that i really love you as my sister.
+I cant imagine a better sibling other than you, pano ko nasabi? 
+Every time na inuutusan kita, kahit alam ko naman na naiinis kana sakin based on your sarcastic replies, 
+sinusunod mo parin hahaha, thats one reason why i love you so much sis.
+Always remember, na nandito lang ako palagi para sayo, magkasama man tayo sa kalokohan or kapag kailangan mo ng kakampi. 
+I would never leave your side, i know its hard to believe kasi palagi kitang inaaway sa bahay, but i really mean it, kakampi mo 'ko. 
+I would always be here for you.
+Enjoy your special day Rian, Happy birthdayyyyy!!!!`;
+
+    const out = document.getElementById('typed');
+    const caret = document.getElementById('caret');
+    const restartBtn = document.getElementById('restart');
+    const skipBtn = document.getElementById('skip');
+
+    // typing settings
+    const baseDelay = 28; // ms per character (adjust for speed)
+    const punctuationPause = 380; // extra pause after punctuation
+
+    let idx = 0;
+    let running = false;
+    let timer = null;
+
+    function encodeHtml(s){
+      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+    function typeNext(){
+      if(idx >= letter.length){
+        running = false;
+        caret.style.opacity = 0; // hide caret when done
+        return;
+      }
+      running = true;
+      caret.style.opacity = 1;
+
+      const ch = letter[idx];
+      // Show newline as <br>
+      if(ch === '\n'){
+        out.innerHTML += '<br>';
+      } else {
+        out.innerHTML += encodeHtml(ch);
+      }
+
+      idx++;
+
+      // compute delay: longer after punctuation
+      let delay = baseDelay;
+      if(/[.,!?]/.test(ch)) delay += punctuationPause;
+
+      timer = setTimeout(typeNext, delay);
+    }
+
+    function startTyping(){
+      // reset
+      clearTimeout(timer);
+      out.innerHTML = '';
+      idx = 0;
+      caret.style.opacity = 1;
+      running = false;
+      // small startup delay for drama
+      setTimeout(()=>{
+        typeNext();
+      }, 300);
+    }
+
+    function showAll(){
+      clearTimeout(timer);
+      out.innerHTML = letter.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+      idx = letter.length;
+      running = false;
+      caret.style.opacity = 0;
+    }
+
+    // controls
+    restartBtn.addEventListener('click', ()=>{
+      startTyping();
+    });
+    skipBtn.addEventListener('click', ()=>{
+      showAll();
+    });
+
+    // start automatically when page loads
+    window.addEventListener('load', ()=>{
+      startTyping();
+    });
+
+    // accessibility: allow keyboard to trigger
+    document.addEventListener('keydown', (e)=>{
+      if(e.key === 'r' || e.key === 'R') startTyping();
+      if(e.key === 's' || e.key === 'S') showAll();
+    });
+  </script>
+</body>
+</html>
