@@ -200,7 +200,7 @@ Enjoy your special day Rian, Happy birthdayyyyy!!!!`;
       idx = 0;
       caret.style.opacity = 1;
       running = false;
-    
+      // small startup delay for drama
       setTimeout(()=>{
         typeNext();
       }, 300);
@@ -214,7 +214,7 @@ Enjoy your special day Rian, Happy birthdayyyyy!!!!`;
       caret.style.opacity = 0;
     }
 
-    
+    // controls
     restartBtn.addEventListener('click', ()=>{
       startTyping();
     });
@@ -222,17 +222,16 @@ Enjoy your special day Rian, Happy birthdayyyyy!!!!`;
       showAll();
     });
 
-    
+    // start automatically when page loads
     window.addEventListener('load', ()=>{
       startTyping();
     });
 
-    
-       document.addEventListener('keydown',(e)=>{
-         if(e.key ==='r' e.key ===
-           'R') startTyping();
-          if(e.key === 's' e.key ===
-            'S' showAll();
- </script>
+    // accessibility: allow keyboard to trigger
+    document.addEventListener('keydown', (e)=>{
+      if(e.key === 'r' || e.key === 'R') startTyping();
+      if(e.key === 's' || e.key === 'S') showAll();
+    });
+  </script>
 </body>
 </html>
